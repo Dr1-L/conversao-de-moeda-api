@@ -37,17 +37,25 @@
             $dados = json_decode(file_get_contents($url), true);
             $cotacao = $dados['value'][0]['cotacaoCompra'];
 
-            // recupera o valor informado pelo usuário
-            $valor = $_GET['valor'] ?? 0;
-
-            // calcula a conversão
-            $dolar = $valor/$cotacao;
-
-            $realFormatado = number_format($valor, 2, ",", ".");
-            $dolarFormatado = number_format($dolar, 2, ",", ".");
-            
-            echo "<p>R\$ {$realFormatado} equivalem à US\$ {$dolarFormatado}.</p>";
+            if ($_GET['valor'] > 0) {
+                # code...
+                // recupera o valor informado pelo usuário
+                $valor = $_GET['valor'] ?? 0;
+    
+                // calcula a conversão
+                $dolar = $valor/$cotacao;
+    
+                $realFormatado = number_format($valor, 2, ",", ".");
+                $dolarFormatado = number_format($dolar, 2, ",", ".");
+                
+                echo "<p>R\$ {$realFormatado} equivalem a US\$ {$dolarFormatado}.</p>";
+                echo "Cotação obtida através do <a href='https://dadosabertos.bcb.gov.br/dataset/dolar-americano-usd-todos-os-boletins-diarios/resource/43a16981-5a4b-47d9-b7bd-4c0c4093f994' target='_blank'>Banco Central do Brasil</a>";
+            } else {
+                echo "<p>Por favor, informe um valor maior que zero.</p>";
+            }
         ?>
+
+        <button onclick="javascript:history.go(-1)">Voltar</button>
     </main>
 
 </body>
